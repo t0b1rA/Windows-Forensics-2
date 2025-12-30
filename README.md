@@ -1,8 +1,32 @@
-# Windows-Forensics-2
-Thiết Bị lưu trữ
+# Windows-Forensics
+## Windows Registry Forensics
+### 1. Windows Registry
+Windows Registry là phần trung tâm, bộ phân cấp cơ sở dữ liệu cho Microsoft Windows. Nó chứa những low-levels settings, options, và cấu hình dữ liệu cho hệ điều hành, phần cứng, phần mềm và các ứng dụng được tải xuống. Windows Registry giống như bản thiết kế cho mọi thứ hoạt động trong Windows. Bao gồm cả những dữ liệu về các file được thường xuyên sử dụng, chương trình đã sử dùng, hoặc các thiết bị kết nối tới hệ thống.
 
+### 2. Structure of the Registry
+The registry trên bất cứ hệ thống Windows nào cũng chuawas 5 root key sau:
+- HKEY_CURRENT_USER
+- HKEY_USERS
+- HKEY_LOCAL_MACHINE
+- HKEY_CLASSES_ROOT
+- HKEY_CURRENT_CONFIG
 
-## I. The FAT file systems
+Để xem được những keys này chúng ta có thể sử dụng tiện ích `regedit.exe`. Để mở registry editor, nhấn Windows R , rồi nhập `regedit.exe`.
+Bây giờ chúng ta sẽ tìm hiểu sâu hơn về phần ý nghĩa của từng keys trên sẽ đảm nhận cho cái gì.
+- **HKEY_CURRENT_USER (HKCU)**: Chứa những thông tin cấu hình gốc rể cho người dùng hiện đang đăng nhập. Folder của người dùng, cài đặt control panel được lưu trữ ở đây. Những thông tin này thường liên quan đến hồ sơ người dùng.
+- **HKEY_USERS (HKU)**: Chứa tất cả những thông tin cấu hình người dùng cụ thể cho tất cả những người dùng đang hoạt động trên máy tính. **HKCU** là một subkey của **HKU**.
+- **HKEY_LOCAL_MACHINE (HKLM)**: Chứa những thông tin cấu hình từng phần cho máy tính.
+- **HKEY_CLASSES_ROOT (HKCR)**: Nó là một subkey của **HKLM\SoftWare**. Những thông tin được lưu trữ ở đây đảm bảo các chương trình được mở đúng khi bạn mở một file bằng Windows Explorers. Chứa những thông tin quan trọng cho liên kết các tập tin với các ứng dụng và quản lí COM(Component Object Model), thiết yếu để nói với Windows rằng là cần làm gì với file đó.
+- **HKEY_CURRENT_CONFIG (HKCC)**: Chứa những thông tin về hồ sơ phần cứng được sử dụng trong máy tính cục bộ khi thiết bị được mở lên.
+
+### 3. Accessing registry hives offilne
+Vị trí của các keys trong một máy Windows:
+- **DEFAULT** (mounted on `HKEY_USERS\DEFAULT`)
+- **SAM** (mounted on `HKEY_LOCAL_MACHINE\SAM`)
+- **SECURITY** (mounted on `HKEY_LOCAL_MACHINE\Security`)
+- **SOFTWARE** (mounted on `HKEY_LOCAL_MACHINE\Software`)
+- **SYSTEM** (mounted on `HKEY_LOCAL_MACHINE\SYSTEM`).
+## The FAT file systems
 ### 1. Cluster
 - **Khái niệm:**
         - CLuster là đơn vị lưu trữ nhỏ nhất trong hệ thống file FAT.
